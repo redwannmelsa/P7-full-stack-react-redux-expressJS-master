@@ -150,7 +150,7 @@ class PostList extends React.Component {
                                  JSON.parse(post.comments).map((comment) => {
                                     return (
                                        <>
-                                       <div id="comments" className="cardbox-item">
+                                       <div className="cardbox-item comments">
                                        {/* delete button shows up only if the user is the one who posted the content OR if user is admin */}
                                        { Object.keys(comment)[0] === this.state.loggedUser || Object.keys(comment)[0] === this.props.userId.userId || this.state.isAdmin || this.props.userId.userId && this.props.userId.userId.admin ? 
                                           <button className='btn btn-danger' onClick={() => this.handleDeleteComment(comment, id)}>Delete comment</button>

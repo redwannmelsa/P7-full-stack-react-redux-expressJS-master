@@ -14,15 +14,27 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            sessionEmail: ''
         }
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:8080/api/content/user/email', {credentials: 'include'})
+            .then(res => res.text())
+            .then(text => this.setState({
+                sessionEmail: text
+            }))
     }
 
     render() {
         return (
             <div className="home">
                 <Navbar />
-                {/* { userEmail } */}
+                { this.state.sessionEmail !== '' && this.state.sessionEmail !== 'no email in session' ? 
+                    <h2>Welcome, {this.state.sessionEmail.split('@')[0]}</h2>
+                    : <h2>Welcome, please log in or sign up</h2> }
                 {/* { this.props.userId.userId.userEmail !== '' ? <h2>email isn't empty string</h2> : null } */}
+                <h2>{}</h2>
                 { this.props.isLogged ? <UserPrompt /> : null }
                 <PostList  />
             </div>

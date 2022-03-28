@@ -44,7 +44,7 @@ app.use(
     resave: false, //doesn't resave user every time they reload session
     saveUninitialized: true,
     cookie: {
-      httpOnly: false, //js can't access cookies -- security feature
+      httpOnly: false, //js can access cookies -- security feature
       secure: false, //this allows cookies to be sent through http -- for development purposes
       maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
     }

@@ -15,6 +15,6 @@ router.post('/:id/comment', contentCtrl.addNewComment);
 router.put('/:id/comment', contentCtrl.deleteComment);
 
 router.get('/:userId', contentCtrl.getUserNameFromId);
-
+router.get('/user/email', contentCtrl.getUserEmail);
 
 module.exports = router;

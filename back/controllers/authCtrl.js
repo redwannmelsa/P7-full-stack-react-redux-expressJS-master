@@ -18,7 +18,7 @@ exports.signup = (req, res) => {
         if (!err) {
             console.log(user.email)
             req.session.userEmail = user.email;
-            result.status(200).json({
+            res.status(200).json({
                 userEmail: user.email
             })
         } else {

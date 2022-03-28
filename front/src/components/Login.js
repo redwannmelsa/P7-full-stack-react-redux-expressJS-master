@@ -27,7 +27,7 @@ class Login extends React.Component {
     }
   
     // Handles the form submission 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
         this.setAlertMessage();
         const requestOptions = {
@@ -36,7 +36,7 @@ class Login extends React.Component {
           credentials: 'include',
           body: JSON.stringify(this.state)
         }
-        fetch('http://localhost:8080/api/auth/login', requestOptions)
+        await fetch('http://localhost:8080/api/auth/login', requestOptions)
           .then(res => res.json())
           .then(data => this.props.userInit(data)) // sets user data in redux store to dynamically update user interface when logged in
           .then(this.props.loggingIn()) // updates redux store login value to true on successful login
@@ -44,6 +44,7 @@ class Login extends React.Component {
         .catch((error) => {
           this.setAlertMessage(error.message);
         });
+        window.location.reload()
       }
     
       setAlertMessage(message) {

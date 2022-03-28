@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from 'react-router';
 import { connect } from "react-redux";
-import { loggedIn, toggleSignup } from "../actions"
+import { loggedIn, toggleSignup, storeUserId } from "../actions"
 
 class Signup extends React.Component {
     constructor(props) {
@@ -27,23 +27,25 @@ class Signup extends React.Component {
     }
   
     // handles the form submission
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
         this.setAlertMessage();
         
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-type': 'application/json' },
+          credentials: 'include',
           body: JSON.stringify(this.state)
         }
-        fetch('http://localhost:8080/api/auth/signup', requestOptions)
+        await fetch('http://localhost:8080/api/auth/signup', requestOptions)
           .then(res => res.json())
-          .then(data => data)
+          .then(data => this.props.userInit(data))
           .then(this.props.loggingIn()) // updates redux store login value on successful signup
           .then(this.props.toggleSignup()) // hides sign up component
         .catch((error) => {
           this.setAlertMessage(error.message);
         });
+        window.location.reload()
       }
     
       setAlertMessage(message) {
@@ -153,7 +155,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loggingIn: () => { dispatch(loggedIn()) },
-    toggleSignup: () => { dispatch(toggleSignup()) }
+    toggleSignup: () => { dispatch(toggleSignup()) },
+    userInit: (data) => { dispatch(storeUserId(data)) }
   }
 }
 

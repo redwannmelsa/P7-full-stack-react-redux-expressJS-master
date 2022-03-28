@@ -162,8 +162,15 @@ exports.getUserNameFromId = (req, res) => {
                 console.log(Object.values(response.rows[0]))
                 res.send(Object.values(response.rows[0]))
             }
-            
-            
         }
     })
+}
+
+exports.getUserEmail = (req, res) => {
+    if (req.session.userEmail) {
+        console.log(req.session.userEmail)
+        res.send(req.session.userEmail)
+    } else {
+        res.send("no email in session")
+    }
 }
